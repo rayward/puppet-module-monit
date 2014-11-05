@@ -25,7 +25,7 @@ class monit::params {
       $monit_service      = 'monit'
       $logfile            = '/var/log/monit'
       $logrotate_script   = '/etc/logrotate.d/monit'
-      $logrotate_source   = "logrotate.redhat.erb"
+      $logrotate_source   = 'logrotate.redhat.erb'
       $service_has_status = true
       $default_conf_tpl   = undef
     }
@@ -52,9 +52,9 @@ class monit::params {
           $logrotate_source   = 'logrotate.ubuntu.erb'
           $service_has_status = true
           case $::lsbdistrelease {
-            "10.10": { $default_conf_tpl = 'monit.default.conf.ubuntu.maverick.erb' }
-            "12.04": { $default_conf_tpl = 'monit.default.conf.ubuntu.precise.erb'}
-            "12.10": { $default_conf_tpl = 'monit.default.conf.ubuntu.quantal.erb'}
+            '10.10': { $default_conf_tpl = 'monit.default.conf.ubuntu.maverick.erb' }
+            '12.04': { $default_conf_tpl = 'monit.default.conf.ubuntu.precise.erb'}
+            '12.10': { $default_conf_tpl = 'monit.default.conf.ubuntu.quantal.erb'}
             default: { fail("Unsupported lsbdistid: ${::lsbdistid} / ${::lsbdistrelease}") }
           }
         }
