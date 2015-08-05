@@ -71,6 +71,7 @@ class monit (
     group   => 'root',
     mode    => '0755',
     require => Package[$monit::params::monit_package],
+    purge   => true,
   }
 
   # Not all platforms need this
