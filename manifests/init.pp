@@ -71,6 +71,7 @@ class monit (
     group   => 'root',
     mode    => '0755',
     require => Package[$monit::params::monit_package],
+    notify  => Service[$monit::params::monit_service],
     purge   => true,
     force   => true,
     recurse => true,
