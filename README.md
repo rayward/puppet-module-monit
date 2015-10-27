@@ -56,6 +56,12 @@ Alternatively you can specify a Unix socket to check:
       socket => "/var/run/gunicorn/blog.sock",
     }
 
+You can also call a script to execute:
+
+    monit::monitor { "docker-ecs-agent":
+      program => "/etc/monit/check-ecs-agent.sh
+    }
+
 You can also provide additional checks:
 
     $reload_blog = "/etc/init.d/gunicorn-blog reload"
