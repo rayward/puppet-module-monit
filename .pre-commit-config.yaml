@@ -1,0 +1,10 @@
+-   repo: git://github.com/pre-commit/mirrors-puppet-lint
+    sha: eb22b19d6d8927999eb590293b1533bd5ffdc56f
+    hooks:
+    -   id: puppet-lint
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    sha: f82fb149af2c1b552b50e3e38e38ed3a44d4cda1
+    hooks:
+    -   id: trailing-whitespace
+    -   id: check-yaml
+    -   id: check-json
