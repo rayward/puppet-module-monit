@@ -108,4 +108,11 @@ class monit (
       File[$monit::params::logrotate_script]
     ],
   }
+  file {'/etc/bash_completion.d/monit':
+    ensure => present,
+    source => "puppet:///modules/${module_name}/monit-bash_completion",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644'
+  }
 }
