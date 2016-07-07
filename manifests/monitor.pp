@@ -44,6 +44,7 @@ define monit::monitor (
   $group         = $name,
   $uid           = '',
   $gid           = '',
+  $depends       = [],
 ) {
   include monit::params
   if ($pidfile == undef) and ($matching == undef) and ($program == undef) {

@@ -264,6 +264,30 @@ describe 'monit::monitor', :type => :define do
       end
     end
 
+    context "Service dependencies (osfamily = Debian)" do
+      let(:title) { 'monit-monitor-depend' }
+
+      let(:params) {
+        {
+            'pidfile'       => '/var/run/monit.pid',
+            'start_script'  => '/bin/start_my_app',
+            'stop_script'   => '/bin/stop_my_app',
+            'uid'           => 'www-data',
+            'gid'           => 'users',
+            'depends'       => ['redis', 'mysql']
+        }
+      }
+
+      it 'should compile' do
+        should contain_file('/etc/monit/conf.d/monit-monitor-depend.conf').with_content(
+            "check process monit-monitor-depend with pidfile /var/run/monit.pid\n" +
+                "  start program = \"/bin/start_my_app\" as uid \"www-data\" and gid \"users\"\n" +
+                "  stop program  = \"/bin/stop_my_app\"\n" +
+                "  group monit-monitor-depend\n" +
+                "  DEPENDS on redis, mysql\n"
+        )
+      end
+    end
   end
 
 end
