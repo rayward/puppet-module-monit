@@ -21,4 +21,9 @@ check program <%= @name %> with path <%= @program %>
 <% @checks.each do |check| -%>
   <%= check %>
 <% end -%>
-  group <%= @group %>
+<% Array(@group).each do |group| -%>
+  group <%= group %>
+<% end -%>
+<% if @depends.any? -%>
+  DEPENDS on <%= @depends.join(', ') %>
+<% end -%>

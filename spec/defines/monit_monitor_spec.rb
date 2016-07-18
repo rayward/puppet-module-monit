@@ -20,18 +20,18 @@ describe 'monit::monitor', :type => :define do
           'matching' => 'some_process_name',
         }
       }
-      it { 
+      it {
         expect { should raise_error(Puppet::Error) }
-      } 
+      }
     end
 
     context "no pidfile nor matching specified" do
       let(:title) { 'monit-monitor-no-pidfile-mathcing' }
 
       let(:params) { }
-      it { 
+      it {
         expect { should raise_error(Puppet::Error) }
-      } 
+      }
     end
 
     context "default usage (osfamily = RedHat)" do
@@ -75,9 +75,30 @@ describe 'monit::monitor', :type => :define do
       it 'should compile' do
         should contain_file('/etc/monit.d/monit-monitor-group.conf').with_content(
           "check process monit-monitor-group with pidfile /var/run/monit.pid\n" +
-          "  start program = \"/etc/init.d/monit-monitor-group start\"\n" +
-          "  stop program  = \"/etc/init.d/monit-monitor-group stop\"\n" +
+          "  start program = \"/usr/sbin/invoke-rc.d monit-monitor-group start\"\n" +
+          "  stop program  = \"/usr/sbin/invoke-rc.d monit-monitor-group stop\"\n" +
           "  group somegroup\n"
+        )
+      end
+    end
+
+    context "Multiple groups  (osfamily = RedHat)" do
+      let(:title) { 'monit-monitor-group' }
+
+      let(:params) {
+        {
+          'pidfile' => '/var/run/monit.pid',
+          'group'   => ['somegroup', 'othergroup'],
+        }
+      }
+
+      it 'should compile' do
+        should contain_file('/etc/monit.d/monit-monitor-group.conf').with_content(
+          "check process monit-monitor-group with pidfile /var/run/monit.pid\n" +
+          "  start program = \"/usr/sbin/invoke-rc.d monit-monitor-group start\"\n" +
+          "  stop program  = \"/usr/sbin/invoke-rc.d monit-monitor-group stop\"\n" +
+          "  group somegroup\n" +
+          "  group othergroup\n"
         )
       end
     end
@@ -167,8 +188,8 @@ describe 'monit::monitor', :type => :define do
       it 'should compile' do
         should contain_file('/etc/monit/conf.d/monit-monitor-group.conf').with_content(
           "check process monit-monitor-group with pidfile /var/run/monit.pid\n" +
-          "  start program = \"/etc/init.d/monit-monitor-group start\"\n" +
-          "  stop program  = \"/etc/init.d/monit-monitor-group stop\"\n" +
+          "  start program = \"/usr/sbin/invoke-rc.d monit-monitor-group start\"\n" +
+          "  stop program  = \"/usr/sbin/invoke-rc.d monit-monitor-group stop\"\n" +
           "  group somegroup\n"
         )
       end
@@ -243,6 +264,30 @@ describe 'monit::monitor', :type => :define do
       end
     end
 
+    context "Service dependencies (osfamily = Debian)" do
+      let(:title) { 'monit-monitor-depend' }
+
+      let(:params) {
+        {
+            'pidfile'       => '/var/run/monit.pid',
+            'start_script'  => '/bin/start_my_app',
+            'stop_script'   => '/bin/stop_my_app',
+            'uid'           => 'www-data',
+            'gid'           => 'users',
+            'depends'       => ['redis', 'mysql']
+        }
+      }
+
+      it 'should compile' do
+        should contain_file('/etc/monit/conf.d/monit-monitor-depend.conf').with_content(
+            "check process monit-monitor-depend with pidfile /var/run/monit.pid\n" +
+                "  start program = \"/bin/start_my_app\" as uid \"www-data\" and gid \"users\"\n" +
+                "  stop program  = \"/bin/stop_my_app\"\n" +
+                "  group monit-monitor-depend\n" +
+                "  DEPENDS on redis, mysql\n"
+        )
+      end
+    end
   end
 
 end
