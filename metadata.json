@@ -2,10 +2,10 @@
   "name": "bigcommerce-monit",
   "version": "1.0.0",
   "author": "Bigcommerce - Technical Operations <techops@bigcommerce.com>",
-  "license": "Proprietary",
   "summary": "BigCommerce Monit Module - Manages monit on the BigCommerce platform",
   "source": "https://github.com/bigcommerce/puppet-module-monit",
   "project_page": "https://github.com/bigcommerce/puppet-module-monit",
+  "license": "MIT",
   "tags": [
     "bigcommerce",
     "monit"
