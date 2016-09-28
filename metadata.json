@@ -7,7 +7,6 @@
   "project_page": "https://github.com/bigcommerce/puppet-module-monit",
   "license": "MIT",
   "tags": [
-    "bigcommerce",
     "monit"
   ],
   "operatingsystem_support": [
