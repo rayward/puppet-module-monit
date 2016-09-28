@@ -1,0 +1,27 @@
+{
+  "name": "bigcommerce-monit",
+  "version": "1.0.0",
+  "author": "Bigcommerce - Technical Operations <techops@bigcommerce.com>",
+  "summary": "BigCommerce Monit Module - Manages monit on the BigCommerce platform",
+  "source": "https://github.com/bigcommerce/puppet-module-monit",
+  "project_page": "https://github.com/bigcommerce/puppet-module-monit",
+  "license": "MIT",
+  "tags": [
+    "monit"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6.0",
+        "7"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": "< 5.0.0"
+    }
+  ]
+}
